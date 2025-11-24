@@ -7,12 +7,27 @@ import UserIcon from './icons/UserIcon.jsx';
 const ChatMessage = ({ message }) => {
   const isUser = message.role === MessageRole.USER;
 
+  // funtion for copy to clipboard
+  function copyclipboard() {
+  
+  var copyText = message.content;
+
+  navigator.clipboard.writeText(copyText);
+
+
+  alert("Copied the text to clipboard" );
+  // console.log(copyText);
+}
+  
+
   const renderIcon = () => {
     const iconClass = "w-8 h-8 p-1.5 rounded-full";
     if (isUser) {
         return <UserIcon className={`${iconClass} bg-blue-500 text-white`} />;
     }
-    return <BotIcon className={`${iconClass} bg-purple-500 text-white`} />;
+    return (
+      <><BotIcon className={`${iconClass} bg-purple-500 text-white`} /></>
+    )
   };
 
   return (
@@ -21,6 +36,7 @@ const ChatMessage = ({ message }) => {
       <div className={`flex flex-col ${isUser ? 'items-end' : 'items-start'} max-w-lg`}>
         <div className={`px-4 py-3 rounded-2xl ${isUser ? 'bg-blue-600 text-white rounded-br-none' : 'bg-white text-gray-800 rounded-bl-none shadow-sm'}`}>
           <p className="whitespace-pre-wrap">{message.content}</p>
+         {!isUser&&<button className='text-black  bg-green-200' onClick={copyclipboard}><span >Copy</span></button>} 
         </div>
         {message.correction && message.explanation && (
           <div className="mt-2 p-3 bg-green-100 border-l-4 border-green-500 rounded-r-lg w-full">
